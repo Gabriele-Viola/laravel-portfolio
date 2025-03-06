@@ -31,8 +31,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        // formatted array
         $technologies = array_keys($data['technologies']);
+        // formatted data
         $period = $data['period_date'] . ' ' . $data['period_time'];
+        // Fill all property
         $newProject = new Project();
         $newProject->title = $data['title'];
         $newProject->client = $data['client'];
@@ -62,9 +65,22 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all();
+        // formatted array
+        $technologies = array_keys($data['technologies']);
+        // formatted data
+        $period = $data['period_date'] . ' ' . $data['period_time'];
+
+        $project->title = $data['title'];
+        $project->client = $data['client'];
+        $project->description = $data['description'];
+        $project->period = $period;
+        $project->technologies = $technologies;
+
+        $project->update();
+        return redirect()->route('projects.show', $project);
     }
 
     /**

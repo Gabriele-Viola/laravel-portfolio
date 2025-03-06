@@ -2,8 +2,9 @@
 @section('title', 'modify Project')
 
 @section('content')
-<form action="{{ route("projects.store") }}" method="POST">
+<form action="{{ route("projects.update", $project) }}" method="POST">
     @csrf
+    @method('PUT')
     <div class="mb-3 d-flex flex-column">
         <label for="title">Title</label>
         <input class="form-control" type="text" name="title" id="title" value="{{ $project->title}}">
@@ -69,7 +70,7 @@
             <input class="form-control" type="time" name="period_time" id="period" value="{{ explode(' ', $project->period)[1]}}">
         </div>
     </div>
-    <button class="btn btn-success" type="submit"><i class="bi bi-floppy"></i> Save</button>
+    <button class="btn btn-success" type="submit"><i class="bi bi-arrow-clockwise"></i> Update</button>
 </form>
     
 @endsection

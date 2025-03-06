@@ -32,7 +32,7 @@
             </div>
             @endif
             <div class="">
-                <a class="btn btn-outline-secondary shadow" href={{ route("projects.show", $project) }}><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-secondary shadow" href={{ route("projects.edit", $project) }}><i class="bi bi-pencil"></i></a>
             </div>
             <div>
                 <a class="btn btn-danger shadow" href={{ route("projects.show", $project) }}><i class="bi bi-trash"></i></a>
