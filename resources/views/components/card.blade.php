@@ -7,10 +7,10 @@
         </div>
         <di class="mt-4">
             <h6 class="text-uppercase mb-3">languages</h6>
-            <ul class="list-unstyled d-flex justify-content-center">
+            <ul class="list-unstyled d-flex justify-content-center mw-100">
                 @foreach ($project->technologies as $technology)
                 <li class="">
-                    <img class="px-2" src="{{ asset('img/' . $technology . '.png')}}" alt={{$technology}}>
+                    <img class="px-2 mw-100" src="{{ asset('img/' . $technology . '.png')}}" alt={{$technology}}>
                 </li>
                 @endforeach
             </ul>
