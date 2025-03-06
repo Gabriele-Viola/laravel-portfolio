@@ -8,8 +8,8 @@
     <title>@yield('title')</title>
 </head>
 <body>
-    <div class="container">
-    <h1>
+    <div class="container position-relative">
+    <h1 class="m-3 text-uppercase">
         @yield('title')
     </h1>
         @yield('content')
