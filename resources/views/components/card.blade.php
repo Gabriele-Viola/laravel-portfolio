@@ -9,7 +9,9 @@
             <h6 class="text-uppercase mb-3">languages</h6>
             <ul class="list-unstyled d-flex justify-content-center">
                 @foreach ($project->technologies as $technology)
-                <li class="pe-3">{{$technology}}</li>
+                <li class="">
+                    <img class="px-2" src="{{ asset('img/' . $technology . '.png')}}" alt={{$technology}}>
+                </li>
                 @endforeach
             </ul>
         </di>
@@ -25,11 +27,11 @@
         @endif
         <div class="d-flex justify-content-between mt-2">
             @if (!isset($client))
-            <div class="flex-grow-1">
+            <div class="">
                 <a class="btn btn-primary " href={{ route("projects.show", $project) }}><i class="bi bi-info-circle"></i></a>
             </div>
             @endif
-            <div class="pe-2">
+            <div class="">
                 <a class="btn btn-outline-secondary shadow" href={{ route("projects.show", $project) }}><i class="bi bi-pencil"></i></a>
             </div>
             <div>
