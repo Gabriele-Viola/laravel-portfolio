@@ -2,15 +2,15 @@
 <div class="card h-100 shadow">
     <div class="card-body d-flex flex-column justify-content-between flex-wrap">
         <h4 class="text-capitalize">{{$project->title}}</h4>
-        <div>
+        <div class="mb-3">
             {{$description ?? ''}}
         </div>
+        <div class="text-capitalize mb-3"><strong>Category: </strong>{{$project->category->name}}</div>
         <di class="mt-4">
-            <h6 class="text-uppercase mb-3">languages</h6>
             <ul class="list-unstyled d-flex justify-content-center mw-100">
                 @foreach ($project->technologies as $technology)
                 <li class="">
-                    <img class="px-2 mw-100" src="{{ asset('img/' . $technology . '.png')}}" alt={{$technology}}>
+                    <img class="px-2 mw-100" src="{{ asset('img/' . $technology . '.webp')}}" alt={{$technology}}>
                 </li>
                 @endforeach
             </ul>
@@ -35,13 +35,13 @@
                 <a class="btn btn-outline-secondary shadow" href={{ route("projects.edit", $project) }}><i class="bi bi-pencil"></i></a>
             </div>
             <div>
-                <button type="button" class="btn btn-danger shadow" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <button type="button" class="btn btn-danger shadow" data-bs-toggle="modal" data-bs-target="#deleteModal{{$project->id}}">
                     <i class="bi bi-trash"></i>
                   </button>
                 
             </div>
         </div>
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{$project->id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{$project->id}}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span class="text-capitalize">no please...</span></button>
-                  <form action="{{route("projects.destroy", $project)}}" method="POST">
+                  <form action="{{route("projects.destroy", $project->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
 

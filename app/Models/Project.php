@@ -9,4 +9,10 @@ class Project extends Model
     public $casts = [
         'technologies' => 'array',
     ];
+
+    public function category()
+    {
+
+        return $this->belongsTo(Category::class);
+    }
 }
