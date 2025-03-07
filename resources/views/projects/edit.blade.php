@@ -10,6 +10,14 @@
         <input class="form-control" type="text" name="title" id="title" value="{{ $project->title}}">
     </div>
     <div class="mb-3 d-flex flex-column">
+        <label for="title">Category</label>
+        <select class="form-select" name="category_id" id="category_id">
+            @foreach ($categories as $category)
+                <option value="{{$category->id}}" {{ $project->category_id == $category->id ? 'selected' : ' '}}>{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-3 d-flex flex-column">
         <label for="client">Client</label>
         <input class="form-control" type="text" name="client" id="client" value="{{ $project->client}}">
     </div>

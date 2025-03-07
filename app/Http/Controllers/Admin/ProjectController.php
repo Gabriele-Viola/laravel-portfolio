@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $categories = Category::all();
+        return view('projects.create', compact('categories'));
     }
 
     /**
@@ -38,6 +40,7 @@ class ProjectController extends Controller
         // Fill all property
         $newProject = new Project();
         $newProject->title = $data['title'];
+        $newProject->category_id = $data['category_id'];
         $newProject->client = $data['client'];
         $newProject->period = $period;
         $newProject->description = $data['description'];
@@ -60,7 +63,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('projects.edit', compact('project'));
+        $categories = Category::all();
+        return view('projects.edit', compact('project', 'categories'));
     }
 
     /**
@@ -79,6 +83,7 @@ class ProjectController extends Controller
         $project->description = $data['description'];
         $project->period = $period;
         $project->technologies = $technologies;
+        $project->category_id = $data['category_id'];
 
         $project->update();
         return redirect()->route('projects.show', $project);
