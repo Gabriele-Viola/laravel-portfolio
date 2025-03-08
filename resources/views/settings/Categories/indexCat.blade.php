@@ -10,16 +10,14 @@
                 <th>option</th>
             </tr>
             @foreach ($categories as $category)
-            <tr>
+            <tr class="{{$category->name == 'No Category' ? 'd-none' : ''}}">
                 <td class="btn btn-info">
                     <a class="text-decoration-none text-light" href='{{route('admin.settings.categories.show', $category)}}'>{{$category->name}}</a></td>
                 <td>{{$category->description}}</td>
                 <td>
                     <a class="btn btn-outline-secondary" href={{route('admin.settings.categories.edit', $category)}}>modifica</a>
-                    <button class="btn btn-danger">elimina</button>
+                    <x-modal :category="$category"/>
                 </td>
-                    
-                
             </tr>
             @endforeach
         </table>
