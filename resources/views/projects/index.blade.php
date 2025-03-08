@@ -1,8 +1,12 @@
 @extends('layouts.projects')
 @section('title', "all my projects")
 @section('content')
+<div class="position-absolute top-0 end-0 mt-2 me-4">
+    <a class="btn btn-primary " href={{ route("projects.create") }}><i class="bi bi-plus-circle"></i> Project</a>
+    <a class="btn btn-secondary " href={{ route("admin.settings.index") }}><i class="bi bi-tools"></i> Settings</a>
 
-<a class="btn btn-primary position-absolute top-0 end-0 mt-2 me-4" href={{ route("projects.create") }}><i class="bi bi-plus-circle"></i> Project</a>
+</div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-4">
 
         
