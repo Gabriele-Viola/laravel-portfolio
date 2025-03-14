@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Technology;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
@@ -56,24 +57,31 @@ class TechnologyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Technology $technology)
     {
-        //
+        return view('settings.technologies.editTech', compact('technology'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Technology $technology)
     {
-        //
+        $data = $request->all();
+        $technology->name = $data['name'];
+        $technology->description = $data['description'];
+        $technology->image = 'img/' . $data['image'];
+
+        $technology->update();
+        return redirect()->route('admin.settings.technologies.show', $technology);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        return redirect()->route('admin.settings.technologies.index');
     }
 }

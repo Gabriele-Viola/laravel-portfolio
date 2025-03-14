@@ -17,11 +17,23 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">no please..</button>
-          <form action="{{route("admin.settings.categories.destroy", $category->id ?? $technology->id)}}" method="POST">
+
+          @isset($category)
+          <form action="{{route("admin.settings.categories.destroy", $category->id)}}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger shadow" ><span class="text-uppercase">delete category for ever!</span></button>
         </form>
+          @endisset
+
+          @isset($technology)
+          <form action="{{route("admin.settings.technologies.destroy", $technology->id)}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger shadow" ><span class="text-uppercase">delete technology for ever!</span></button>
+        </form>
+          @endisset
+
         </div>
       </div>
     </div>
