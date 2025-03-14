@@ -23,7 +23,7 @@ class ProjectTableSeeder extends Seeder
             $newProject->client = $faker->company();
             $newProject->period = $faker->dateTimeBetween('-2 month', '+ 1 month');
             $newProject->description = $faker->paragraph(6);
-            $newProject->technologies = $faker->words(rand(2, 6));
+            // $newProject->technologies = $faker->words(rand(2, 6));
 
             $newProject->save();
         }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("client");
             $table->string("period");
             $table->longText("description");
-            $table->json("technologies");
+            // $table->json("technologies");
             $table->timestamps();
         });
     }

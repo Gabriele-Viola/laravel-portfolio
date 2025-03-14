@@ -12,7 +12,7 @@
         
         @foreach ($projects as $project)
         <div class="col">
-            <x-card :project="$project" />
+            <x-card :project="$project" :technologies="$technologies"/>
         </div>
         @endforeach
     </div>

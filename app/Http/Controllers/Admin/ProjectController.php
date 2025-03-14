@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -15,7 +16,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view('projects.index', compact('projects'));
+        $technologies = Technology::all();
+        return view('projects.index', compact('projects', 'technologies'));
     }
 
     /**
@@ -24,7 +26,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('projects.create', compact('categories'));
+        $technologies = Technology::all();
+        return view('projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -33,8 +36,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // formatted array
-        $technologies = array_keys($data['technologies']);
+
+        // dd($data);
+
         // formatted data
         $period = $data['period_date'] . ' ' . $data['period_time'];
         // Fill all property
@@ -44,8 +48,12 @@ class ProjectController extends Controller
         $newProject->client = $data['client'];
         $newProject->period = $period;
         $newProject->description = $data['description'];
-        $newProject->technologies = $technologies;
+
         $newProject->save();
+
+        $newProject->technology()->attach($data['technologies']);
+
+
         return redirect()->route('projects.show', $newProject);
     }
 
@@ -54,7 +62,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        dd($project->technology);
+        // dd($project->technology);
         return view('projects.show', compact('project'));
     }
 
@@ -74,7 +82,6 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         // formatted array
-        $technologies = array_keys($data['technologies']);
         // formatted data
         $period = $data['period_date'] . ' ' . $data['period_time'];
 
@@ -82,7 +89,6 @@ class ProjectController extends Controller
         $project->client = $data['client'];
         $project->description = $data['description'];
         $project->period = $period;
-        $project->technologies = $technologies;
         $project->category_id = $data['category_id'];
 
         $project->update();

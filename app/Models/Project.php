@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    public $casts = [
-        'technologies' => 'array',
-    ];
+    // public $casts = [
+    //     'technologies' => 'array',
+    // ];
 
     public function category()
     {

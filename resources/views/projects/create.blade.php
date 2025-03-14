@@ -2,6 +2,7 @@
 @section('title', 'Add Project')
 
 @section('content')
+
 <form action="{{ route("projects.store") }}" method="POST">
     @csrf
     <div class="mb-3 d-flex flex-column">
@@ -27,7 +28,15 @@
     <div class="form-control mb-3 py-3 d-flex justify-content-end">
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 gy-4">
 
-            <label for="HTML"> <img src="{{ asset('img/HTML.png') }}" alt="">
+            @foreach ($technologies as $technology)
+            <div class="col">
+                <input type="checkbox" name="technologies[]" value="{{$technology->id}}" id="technology-{{$technology->id}}">
+                <label for="technology-{{$technology->id}}">{{$technology->name}}</label>
+            </div>
+                
+            @endforeach
+
+            {{-- <label for="HTML"> <img src="{{ asset('img/HTML.png') }}" alt="">
                 <input type="checkbox" name="technologies[HTML]" id="HTML">
             </label>
             <label for="CSS"><img src="{{ asset('img/CSS.png') }}" alt="">
@@ -56,7 +65,7 @@
             </label>
             <label for="tailwindcss"><img src="{{ asset('img/tailwindcss.png') }}" alt="">
                 <input type="checkbox" name="technologies[tailwindcss]" id="tailwindcss">
-            </label>
+            </label> --}}
         </div>
     
     </div>
