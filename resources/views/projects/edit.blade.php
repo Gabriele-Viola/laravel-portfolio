@@ -28,46 +28,14 @@
     <div class="form-control mb-3 py-3 d-flex justify-content-end">
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 gy-4">
 
-            <label for="HTML"> <img src="{{ asset('img/HTML.png') }}" alt="">
-                <input type="checkbox" name="technologies[HTML]" id="HTML" value="HTML"
-                {{ in_array('HTML', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="CSS"><img src="{{ asset('img/CSS.png') }}" alt="">
-                <input type="checkbox" name="technologies[CSS]" id="CSS" value="CSS"
-                {{ in_array('CSS', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="JavaScript"> <img src="{{ asset('img/JavaScript.png') }}" alt="">
-                <input type="checkbox" name="technologies[JavaScript]" id="JavaScript" value="JavaScript"
-                {{ in_array('JavaScript', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="PHP"> <img src="{{ asset('img/PHP.png') }}" alt="">
-                <input type="checkbox" name="technologies[PHP]" id="PHP" value="PHP"
-                {{ in_array('PHP', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="node"> <img src="{{ asset('img/node.png') }}" alt="">
-                <input type="checkbox" name="technologies[node]" id="node" value="node"
-                {{ in_array('node', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="express"> <img src="{{ asset('img/express.png') }}" alt="">
-                <input type="checkbox" name="technologies[express]" id="express" value="express"
-                {{ in_array('express', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="react"> <img src="{{ asset('img/react.png') }}" alt="">
-                <input type="checkbox" name="technologies[react]" id="react" value="react"
-                {{ in_array('react', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="Laravel"><img src="{{ asset('img/laravel.png') }}" alt="">
-                <input type="checkbox" name="technologies[laravel]" id="Laravel" value="laravel"
-                {{ in_array('laravel', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="Bootstrap"><img src="{{ asset('img/bootstrap.png') }}" alt="">
-                <input type="checkbox" name="technologies[bootstrap]" id="Bootstrap" value="Bootstrap"
-                {{ in_array('Bootstrap', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
-            <label for="tailwindcss"><img src="{{ asset('img/tailwindcss.png') }}" alt="">
-                <input type="checkbox" name="technologies[tailwindcss]" id="tailwindcss" value="tailwindcss"
-                {{ in_array('tailwindcss', $project->technologies ?? []) ? 'checked' : '' }}>
-            </label>
+            @foreach ($technologies as $technology)
+            <div class="col">
+                <input type="checkbox" name="technologies[]" value="{{$technology->id}}" id="technology-{{$technology->id}}" {{$project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                <label for="technology-{{$technology->id}}">{{$technology->name}}</label>
+            </div>
+                
+            @endforeach
+
         </div>
     
     </div>

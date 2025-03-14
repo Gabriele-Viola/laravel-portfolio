@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashbordController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', [SettingsController::class, 'index'])
                     ->name('index');
                 Route::resource('categories', CategoryController::class);
+                Route::resource('technologies', TechnologyController::class);
             });
     });
 

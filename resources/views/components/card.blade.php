@@ -1,4 +1,4 @@
-@props(['project', 'technologies'])
+@props(['project'])
 <div class="card h-100 shadow">
     <div class="card-body d-flex flex-column justify-content-between flex-wrap">
         <h4 class="text-capitalize">{{$project->title}}</h4>
@@ -6,15 +6,18 @@
             {{$description ?? ''}}
         </div>
         <div class="text-capitalize mb-3"><strong>Category: </strong>{{$project->category->name}}</div>
-        {{-- <div class="mt-4">
+        <div class="mt-4">
+            @if (count($project->technologies) > 0)
+            <div class="text-capitalize text-center mb-3"><strong>Technologies</strong></div>
             <ul class="list-unstyled d-flex justify-content-center mw-100">
                 @foreach ($project->technologies as $technology)
                 <li class="">
-                    <img class="px-2 mw-100" src="{{ asset('img/' . $technology . '.webp')}}" alt={{$technology}}>
+                    <img class="px-2 mw-100" src="{{asset($technology->image)}}" alt='{{$technology->name}}'>
                 </li>
                 @endforeach
             </ul>
-        </div> --}}
+            @endif
+        </div>
         @if ($client ?? false)
         <div class="mb-2">
             <strong>Client: </strong> <span>{{$client}}</span>

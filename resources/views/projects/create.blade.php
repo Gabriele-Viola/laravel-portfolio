@@ -35,37 +35,6 @@
             </div>
                 
             @endforeach
-
-            {{-- <label for="HTML"> <img src="{{ asset('img/HTML.png') }}" alt="">
-                <input type="checkbox" name="technologies[HTML]" id="HTML">
-            </label>
-            <label for="CSS"><img src="{{ asset('img/CSS.png') }}" alt="">
-                <input type="checkbox" name="technologies[CSS]" id="CSS">
-            </label>
-            <label for="JavaScript"> <img src="{{ asset('img/JavaScript.png') }}" alt="">
-                <input type="checkbox" name="technologies[JavaScript]" id="JavaScript">
-            </label>
-            <label for="PHP"> <img src="{{ asset('img/PHP.png') }}" alt="">
-                <input type="checkbox" name="technologies[PHP]" id="PHP">
-            </label>
-            <label for="node"> <img src="{{ asset('img/node.png') }}" alt="">
-                <input type="checkbox" name="technologies[node]" id="node">
-            </label>
-            <label for="express"> <img src="{{ asset('img/express.png') }}" alt="">
-                <input type="checkbox" name="technologies[express]" id="express">
-            </label>
-            <label for="react"> <img src="{{ asset('img/react.png') }}" alt="">
-                <input type="checkbox" name="technologies[react]" id="react">
-            </label>
-            <label for="Laravel"><img src="{{ asset('img/laravel.png') }}" alt="">
-                <input type="checkbox" name="technologies[laravel]" id="Laravel">
-            </label>
-            <label for="Bootstrap"><img src="{{ asset('img/bootstrap.png') }}" alt="">
-                <input type="checkbox" name="technologies[bootstrap]" id="Bootstrap">
-            </label>
-            <label for="tailwindcss"><img src="{{ asset('img/tailwindcss.png') }}" alt="">
-                <input type="checkbox" name="technologies[tailwindcss]" id="tailwindcss">
-            </label> --}}
         </div>
     
     </div>
