@@ -6,7 +6,7 @@
     <div class="card-body">
         <h4>{{$technology->name}}</h4>
     <div class="card-img">
-        <img src="{{asset($technology->image)}}" alt="{{$technology->name}}">
+        <img src="{{ asset('storage/' . $technology->image) }}" alt="{{$technology->name}}" class="img-fluid w-25">
     </div>
         <p>{{$technology->description}}</p>
     </div>

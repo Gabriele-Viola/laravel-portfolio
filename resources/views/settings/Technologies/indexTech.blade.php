@@ -17,7 +17,7 @@
                     <a class="text-decoration-none text-light" href='{{route('admin.settings.technologies.show', $technology)}}'>{{$technology->name}}</a></td>
                 <td>{{$technology->description}}</td>
                 <td class="text-center">
-                    <img src="{{asset($technology->image)}}" alt="{{$technology->name}}"></td>
+                    <img src="{{ asset('storage/' . $technology->image) }}" alt="{{$technology->name}}"></td>
                 <td class="text-center">
                     <a class="btn btn-outline-secondary" href={{route('admin.settings.technologies.edit', $technology)}}>modifica</a>
                     <x-modal :technology="$technology"/>

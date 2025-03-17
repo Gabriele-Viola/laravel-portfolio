@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Technology;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TechnologyController extends Controller
 {
@@ -33,14 +34,16 @@ class TechnologyController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // dd($data);
-
-        $image = 'img/' . $data['image'];
 
         $newTechnology = new Technology();
         $newTechnology->name = $data['name'];
         $newTechnology->description = $data['description'];
-        $newTechnology->image = $image;
+        if (array_key_exists('image', $data)) {
+
+            $img_url = Storage::putFile('technologiesImg', $data['image']);
+            $newTechnology->image = $img_url;
+        }
+
 
         $newTechnology->save();
         return redirect()->route('admin.settings.technologies.show', $newTechnology);
@@ -70,7 +73,11 @@ class TechnologyController extends Controller
         $data = $request->all();
         $technology->name = $data['name'];
         $technology->description = $data['description'];
-        $technology->image = 'img/' . $data['image'];
+        if (array_key_exists('image', $data)) {
+            Storage::delete($technology->image);
+            $img_url = Storage::putFile('technologiesImg', $data['image']);
+            $technology->image = $img_url;
+        }
 
         $technology->update();
         return redirect()->route('admin.settings.technologies.show', $technology);
@@ -81,6 +88,10 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
+
+        if ($technology->image) {
+            Storage::delete($technology->image);
+        }
         $technology->delete();
         return redirect()->route('admin.settings.technologies.index');
     }
