@@ -12,7 +12,7 @@
             <ul class="list-unstyled d-flex justify-content-center mw-100">
                 @foreach ($project->technologies as $technology)
                 <li class="">
-                    <img class="px-2 mw-100" src="{{asset($technology->image)}}" alt='{{$technology->name}}'>
+                    <img class="px-2 mw-100" src="{{ asset('storage/' . $technology->image) }}" alt='{{$technology->name}}'>
                 </li>
                 @endforeach
             </ul>
