@@ -1,5 +1,5 @@
 @props(['project'])
-<div class="card h-100 shadow">
+<div class="card h-100 shadow mb-3">
     <div class="card-body d-flex flex-column justify-content-between flex-wrap">
         <div class="text-center" style="height: 350px">
 
