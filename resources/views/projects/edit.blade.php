@@ -2,51 +2,81 @@
 @section('title', 'modify Project')
 
 @section('content')
-<form action="{{ route("projects.update", $project) }}" method="POST">
-    @csrf
-    @method('PUT')
-    <div class="mb-3 d-flex flex-column">
-        <label for="title">Title</label>
-        <input class="form-control" type="text" name="title" id="title" value="{{ $project->title}}">
-    </div>
-    <div class="mb-3 d-flex flex-column">
-        <label for="title">Category</label>
-        <select class="form-select" name="category_id" id="category_id">
-            @foreach ($categories as $category)
-                <option value="{{$category->id}}" {{ $project->category_id == $category->id ? 'selected' : ' '}}>{{$category->name}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="mb-3 d-flex flex-column">
-        <label for="client">Client</label>
-        <input class="form-control" type="text" name="client" id="client" value="{{ $project->client}}">
-    </div>
-    <div class="mb-3 d-flex flex-column">
-        <label for="description">Description</label>
-        <textarea class="form-control" name="description" id="description"  rows="10">{{ $project->description}}</textarea>
-    </div>
-    <div class="form-control mb-3 py-3 d-flex justify-content-end">
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 gy-4">
+    <form action="{{ route('projects.update', $project) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="mb-3 d-flex flex-column">
+            <label for="title">Title</label>
+            <input class="form-control" type="text" name="title" id="title" value="{{ $project->title }}">
+        </div>
+        <div class="mb-3 d-flex flex-column">
+            <label for="title">Category</label>
+            <select class="form-select" name="category_id" id="category_id">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $project->category_id == $category->id ? 'selected' : ' ' }}>
+                        {{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3 d-flex flex-column">
+            <label for="client">Client</label>
+            <input class="form-control" type="text" name="client" id="client" value="{{ $project->client }}">
+        </div>
+        <div class="mb-3 d-flex flex-column">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" rows="10">{{ $project->description }}</textarea>
+        </div>
+        <div class="form-control mb-3 py-3 d-flex justify-content-end">
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 gy-4">
 
-            @foreach ($technologies as $technology)
-            <div class="col">
-                <input type="checkbox" name="technologies[]" value="{{$technology->id}}" id="technology-{{$technology->id}}" {{$project->technologies->contains($technology->id) ? 'checked' : ''}}>
-                <label for="technology-{{$technology->id}}">{{$technology->name}}</label>
+                @foreach ($technologies as $technology)
+                    <div class="col">
+                        <input type="checkbox" name="technologies[]" value="{{ $technology->id }}"
+                            id="technology-{{ $technology->id }}"
+                            {{ $project->technologies->contains($technology->id) ? 'checked' : '' }}>
+                        <label for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+
             </div>
-                
-            @endforeach
 
         </div>
-    
-    </div>
-    <div class="mb-3 d-flex flex-column">
-        <label for="period_date">Period</label>
-        <div class="d-flex">
-            <input class="form-control" type="date" name="period_date" id="period" value="{{ explode(' ', $project->period)[0]}}">
-            <input class="form-control" type="time" name="period_time" id="period" value="{{ explode(' ', $project->period)[1]}}">
+        <div class="mb-3 d-flex flex-column">
+            <label for="period_date">Period</label>
+            <div class="d-flex">
+                <input class="form-control" type="date" name="period_date" id="period"
+                    value="{{ explode(' ', $project->period)[0] }}">
+                <input class="form-control" type="time" name="period_time" id="period"
+                    value="{{ explode(' ', $project->period)[1] }}">
+            </div>
         </div>
-    </div>
-    <button class="btn btn-success" type="submit"><i class="bi bi-arrow-clockwise"></i> Update</button>
-</form>
-    
+        <div class="row align-items-center justify-content-between">
+            <div class="col-xl-9">
+
+                <label class=" mb-3 form-control-label" for="imageProject">Cover image</label>
+                <input class=" mb-3 form-control" type="file" name="imageProject" id="imageProject">
+            </div>
+            <div class="col-xl-2">
+                <img class="img-fluid img-thumbnail"
+                    src="{{ !$project->image_project ? 'https://placehold.co/600x400?text=No+Image' : asset('storage/' . $project->image_project) }}"
+                    alt="Image-project">
+            </div>
+        </div>
+        <div>
+            <label class=" mb-3 form-control-label" for="images">Additional images</label>
+            <input class=" mb-3 form-control" type="file" name="images[]" id="images" multiple>
+        </div>
+        @isset($images)
+            <h5 class="text-center text-uppercase mb-3">Preview images</h5>
+            <div class="d-flex mb-5 justify-content-around">
+                @foreach ($images as $image)
+                    <div class="rounded overflow-hidden shadow">
+                        <img style="width: 150px" src="{{ asset('storage/' . $image->image) }}" alt="one project's image">
+                    </div>
+                @endforeach
+            </div>
+        @endisset
+        <button class="btn btn-success mb-3" type="submit"><i class="bi bi-arrow-clockwise"></i> Update</button>
+    </form>
+
 @endsection

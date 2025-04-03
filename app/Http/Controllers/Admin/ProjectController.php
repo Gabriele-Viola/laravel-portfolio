@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -37,6 +39,8 @@ class ProjectController extends Controller
     {
         $data = $request->all();
 
+
+        // dd($request);
         // dd($data);
 
         // formatted data
@@ -48,8 +52,22 @@ class ProjectController extends Controller
         $newProject->client = $data['client'];
         $newProject->period = $period;
         $newProject->description = $data['description'];
+        if (array_key_exists('imageProject', $data)) {
+            $imgCover_url = Storage::putFile('projectsCovers', $data['imageProject']);
+            $newProject->image_project = $imgCover_url;
+        }
 
         $newProject->save();
+
+        if (array_key_exists('images', $data)) {
+            foreach ($data['images'] as $image) {
+                $img_url = Storage::putFile('projectImage', $image);
+                $newProject->images()->create([
+                    'image' => $img_url
+                ]);
+            }
+        }
+
 
         $newProject->technologies()->attach($data['technologies']);
 
@@ -62,8 +80,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        // dd($project->technology);
-        return view('projects.show', compact('project'));
+        $images = Image::where('project_id', $project->id)->get();
+        return view('projects.show', compact('project', 'images'));
     }
 
     /**
@@ -73,8 +91,10 @@ class ProjectController extends Controller
     {
         $categories = Category::all();
         $technologies = Technology::all();
+        $images = Image::where('project_id', $project->id)->get();
 
-        return view('projects.edit', compact('project', 'categories', 'technologies'));
+
+        return view('projects.edit', compact('project', 'categories', 'technologies', 'images'));
     }
 
     /**
@@ -92,8 +112,28 @@ class ProjectController extends Controller
         $project->description = $data['description'];
         $project->period = $period;
         $project->category_id = $data['category_id'];
+        if (array_key_exists('imageProject', $data)) {
+            Storage::delete($project->image_project);
+            $img_url = Storage::putFile('projectsCovers', $data['imageProject']);
+            $project->image_project = $img_url;
+        }
 
         $project->update();
+
+
+        if (array_key_exists('images', $data)) {
+            foreach ($project->images as $image) {
+                Storage::delete($image->image);
+                $image->delete();
+            }
+
+            foreach ($data['images'] as $image) {
+                $img_url = Storage::putFile('projectImage', $image);
+                $project->images()->create([
+                    'image' => $img_url
+                ]);
+            }
+        }
 
         if ($request->has('technologies')) {
 
@@ -110,7 +150,19 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->image_project) {
+            Storage::delete($project->image_project);
+        }
+
+        foreach ($project->images as $image) {
+            Storage::delete($image->image);
+
+            $image->delete();
+        }
+
+
         $project->technologies()->detach();
+
         $project->delete();
 
         return redirect()->route('projects.index');
