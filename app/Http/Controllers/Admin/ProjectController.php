@@ -37,7 +37,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'client' => 'required|string|max:255',
+            'period_date' => 'required|date',
+            'period_time' => 'required|date_format:H:i',
+            'description' => 'required|string',
+            'imageProject' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg, svg, gif,|max:2048',
+            'technologies' => 'nullable|array',
+            'technologies.*' => 'exists:technologies,id',
+        ]);
 
 
         // dd($request);
