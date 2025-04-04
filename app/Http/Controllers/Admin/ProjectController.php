@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Project;
@@ -35,20 +36,9 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'client' => 'required|string|max:255',
-            'period_date' => 'required|date',
-            'period_time' => 'required|date_format:H:i',
-            'description' => 'required|string',
-            'imageProject' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg, svg, gif,|max:2048',
-            'technologies' => 'nullable|array',
-            'technologies.*' => 'exists:technologies,id',
-        ]);
+        $data = $request->validated();
 
 
         // dd($request);
