@@ -8,7 +8,7 @@
         <x-slot:period>{{ $project->period }}</x-slot:period>
     </x-card>
     @isset($images)
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-around align-items-center">
 
             @foreach ($images as $image)
                 <div>
