@@ -11,7 +11,7 @@ class ProjectsContoller extends Controller
     public function index()
     {
 
-        $projects = Project::with('category')->get();
+        $projects = Project::with('category', 'technologies')->get();
 
         return response()->json([
             'success' => true,
@@ -19,9 +19,15 @@ class ProjectsContoller extends Controller
         ]);
     }
 
-    public function show(Project $project)
+    public function show($slug)
     {
-        $project->load('category', 'technologies');
+        $project = Project::where('slug', $slug)->with(['category', 'technologies'])->first();
+        if (!$project) {
+            return response()->json([
+                'success' => false,
+                'message' => "Project doesn't found"
+            ], 404);
+        }
         return response()->json([
             'success' => true,
             'data' => $project

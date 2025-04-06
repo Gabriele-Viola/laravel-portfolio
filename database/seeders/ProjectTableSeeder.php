@@ -22,8 +22,10 @@ class ProjectTableSeeder extends Seeder
             $newProject->title = $faker->sentence();
             $newProject->client = $faker->company();
             $newProject->period = $faker->dateTimeBetween('-2 month', '+ 1 month');
+            $newProject->category_id = rand(1, 6);
             $newProject->description = $faker->paragraph(6);
-            // $newProject->technologies = $faker->words(rand(2, 6));
+            $newProject->image_project = $faker->imageUrl();
+            $newProject->slug = str_replace(' ', '-', $faker->sentence());
 
             $newProject->save();
         }

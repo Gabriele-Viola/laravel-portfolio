@@ -30,7 +30,7 @@ class StoreProjectRequest extends FormRequest
             'period_time' => 'required|date_format:H:i',
             'description' => 'required|string',
             'imageProject' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg, svg, gif,|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
             'technologies' => 'nullable|array',
             'technologies.*' => 'exists:technologies,id',
 

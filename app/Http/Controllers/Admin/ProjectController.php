@@ -43,16 +43,23 @@ class ProjectController extends Controller
 
         // dd($request);
         // dd($data);
+        $exists = Project::where('title', $data['title'])->exists();
 
-        // formatted data
         $period = $data['period_date'] . ' ' . $data['period_time'];
-        // Fill all property
+
         $newProject = new Project();
         $newProject->title = $data['title'];
         $newProject->category_id = $data['category_id'];
         $newProject->client = $data['client'];
         $newProject->period = $period;
         $newProject->description = $data['description'];
+
+        if ($exists) {
+
+            $newProject->slug = str_replace(' ', '-', $data['title']) . date('Y-m-d-H-i-s');
+        } else {
+            $newProject->slug = str_replace(' ', '-', $data['title']);
+        }
         if (array_key_exists('imageProject', $data)) {
             $imgCover_url = Storage::putFile('projectsCovers', $data['imageProject']);
             $newProject->image_project = $imgCover_url;
