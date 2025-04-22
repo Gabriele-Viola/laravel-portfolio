@@ -20,7 +20,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $technologies = Technology::all();
-        return view('projects.index', compact('projects', 'technologies'));
+        return view('admin.projects.index', compact('projects', 'technologies'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ProjectController extends Controller
     {
         $categories = Category::all();
         $technologies = Technology::all();
-        return view('projects.create', compact('categories', 'technologies'));
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -56,7 +56,7 @@ class ProjectController extends Controller
 
         if ($exists) {
 
-            $newProject->slug = str_replace(' ', '-', $data['title']) . date('Y-m-d-H-i-s');
+            $newProject->slug = str_replace(' ', '-', $data['title']) . date('YmdHis');
         } else {
             $newProject->slug = str_replace(' ', '-', $data['title']);
         }
@@ -80,7 +80,7 @@ class ProjectController extends Controller
         $newProject->technologies()->attach($data['technologies']);
 
 
-        return redirect()->route('projects.show', $newProject);
+        return redirect()->route('admin.projects.show', $newProject);
     }
 
     /**
@@ -89,7 +89,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $images = Image::where('project_id', $project->id)->get();
-        return view('projects.show', compact('project', 'images'));
+        return view('admin.projects.show', compact('project', 'images'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProjectController extends Controller
         $images = Image::where('project_id', $project->id)->get();
 
 
-        return view('projects.edit', compact('project', 'categories', 'technologies', 'images'));
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies', 'images'));
     }
 
     /**
@@ -150,7 +150,7 @@ class ProjectController extends Controller
             $project->technologies()->detach();
         }
 
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -173,6 +173,6 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->route('projects.index');
+        return redirect()->route('admin.projects.index');
     }
 }

@@ -21,7 +21,7 @@ class ProjectsContoller extends Controller
 
     public function show($slug)
     {
-        $project = Project::where('slug', $slug)->with(['category', 'technologies'])->first();
+        $project = Project::where('slug', $slug)->with(['category', 'technologies', 'images'])->first();
         if (!$project) {
             return response()->json([
                 'success' => false,

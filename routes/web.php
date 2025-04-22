@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'is_admin'])
     ->name("admin.")
     ->prefix("admin")
     ->group(function () {
@@ -42,8 +42,19 @@ Route::middleware(['auth', 'verified'])
             });
     });
 
-Route::resource('projects', ProjectController::class)
-    ->middleware(['auth', 'verified']);
+// Route::resource('projects', ProjectController::class)->only('index', 'show', 'create');
+
+// Route::resource('projects', ProjectController::class)
+//     ->middleware(['auth', 'verified', 'is_admin'])
+//     ->only('store', 'edit', 'update', 'destroy');
+
+// Route::resource('projects', ProjectController::class)->only('index', 'show');
+
+Route::resource('projects', ProjectController::class);
+// ->middleware(['auth', 'verified']);
+
+
+
 
 
 

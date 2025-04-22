@@ -38,21 +38,24 @@
         <div class="d-flex justify-content-between mt-2">
             @if (!isset($client))
                 <div class="">
-                    <a class="btn btn-primary " href={{ route('projects.show', $project) }}><i
+                    <a class="btn btn-primary " href={{ route('admin.projects.show', $project) }}><i
                             class="bi bi-info-circle"></i></a>
                 </div>
             @endif
-            <div class="">
-                <a class="btn btn-outline-secondary shadow" href={{ route('projects.edit', $project) }}><i
-                        class="bi bi-pencil"></i></a>
-            </div>
-            <div>
-                <button type="button" class="btn btn-danger shadow" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal{{ $project->id }}">
-                    <i class="bi bi-trash"></i>
-                </button>
 
-            </div>
+            @if (Auth::user()->is_admin)
+                <div class="">
+                    <a class="btn btn-outline-secondary shadow" href={{ route('admin.projects.edit', $project) }}><i
+                            class="bi bi-pencil"></i></a>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger shadow" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{ $project->id }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                </div>
+            @endif
         </div>
         <div class="modal fade" id="deleteModal{{ $project->id }}" tabindex="-1"
             aria-labelledby="deleteModalLabel{{ $project->id }}" aria-hidden="true">
@@ -68,13 +71,16 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span
                                 class="text-capitalize">no please...</span></button>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                        @if (Auth::user()->is_admin)
+                            <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
 
-                            <button type="submit" class="btn btn-danger shadow"><span class="text-uppercase">delete for
-                                    ever!</span></button>
-                        </form>
+                                <button type="submit" class="btn btn-danger shadow"><span class="text-uppercase">delete
+                                        for
+                                        ever!</span></button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
