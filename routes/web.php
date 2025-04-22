@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'verified', 'is_admin'])
+Route::middleware(['auth', 'verified'])
     ->name("admin.")
     ->prefix("admin")
     ->group(function () {
@@ -42,16 +43,11 @@ Route::middleware(['auth', 'verified', 'is_admin'])
             });
     });
 
-// Route::resource('projects', ProjectController::class)->only('index', 'show', 'create');
 
-// Route::resource('projects', ProjectController::class)
-//     ->middleware(['auth', 'verified', 'is_admin'])
-//     ->only('store', 'edit', 'update', 'destroy');
 
-// Route::resource('projects', ProjectController::class)->only('index', 'show');
+Route::resource('projects', ProjectController::class)
+    ->middleware(['auth', 'verified']);
 
-Route::resource('projects', ProjectController::class);
-// ->middleware(['auth', 'verified']);
 
 
 

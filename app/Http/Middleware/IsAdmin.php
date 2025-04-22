@@ -16,11 +16,10 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (Auth::user() && Auth::user()->is_admin) {
 
             return $next($request);
         }
-
-        abort(403, 'access denied');
+        abort(403, 'Access denied!');
     }
 }
